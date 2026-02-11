@@ -3,30 +3,42 @@
 [![CI](https://github.com/lukeredpath/swift-responsive-textfield/actions/workflows/ci.yml/badge.svg)](https://github.com/lukeredpath/swift-responsive-textfield/actions/workflows/ci.yml)
 [![GitHub license](https://img.shields.io/github/license/lukeredpath/swift-responsive-textfield.svg)](https://github.com/lukeredpath/swift-responsive-textfield/blob/master/LICENSE)
 
-This library aims to achieve one goal, which is provide a reasonably flexible
-and useful SwiftUI wrapper around UITextField that provides more control over
-it's first responder status, one of the most glaring omissions from SwiftUI's
-native TextField.
+This library provides reasonably flexible and useful SwiftUI wrappers around
+UITextField and UITextView that give more control over first responder status,
+one of the most glaring omissions from SwiftUI's native text input views.
+
+It ships two views:
+
+* **`ResponsiveTextField`** — single-line text input (wraps `UITextField`)
+* **`ResponsiveTextEditor`** — multiline text input (wraps `UITextView`)
+
+Both share the same first responder control, environment-based styling, and
+standard edit action APIs.
+
+> **Requires iOS 18+ / Swift 6.**
 
 ## Features
 
-At a high level, it provides the ability to:
+At a high level, both views provide the ability to:
 
-* Use of SwiftUI bindings to capture entered text and control the text field's
+* Use of SwiftUI bindings to capture entered text and control the view's
   first responder status.
-* Observe and react to the text field's first responder status.
-* Set the text field's placeholder.
-* Enable secure text entry.
-* Easily handle return key and delete key taps with a simple callback.
-* Style the text field using SwiftUI-style view modifiers.
-* Support for enabling and disabling the text field using the SwiftUI
-  `.disabled` view modifier.
-* Configure the properties of the underlying text field using a composable
-  text field configuration system.
+* Observe and react to the first responder status.
+* Set a placeholder string.
+* Easily handle delete key taps with a simple callback.
+* Style the view using SwiftUI-style view modifiers.
+* Support for enabling and disabling using the SwiftUI `.disabled` modifier.
+* Configure the properties of the underlying UIKit view using a composable
+  configuration system.
 * Control over how and when text changes should be permitted.
-* Control over if the text field should begin or end editing.
+* Control over if the view should begin or end editing.
 * Customise which standard edit actions are available (e.g. copy, paste).
 * Override and customise the handling of standard edit actions.
+
+`ResponsiveTextField` additionally supports:
+
+* Enable secure text entry.
+* Handle return key taps with a simple callback.
 
 The following features are not currently supported:
 
@@ -34,8 +46,8 @@ The following features are not currently supported:
 * Managing the text selection.
 * Any of the built-in attributed string supporting APIs.
 
-Most UITextField APIs that are not exposed directly can be managed using the
-text field configuration system.
+Most UIKit APIs that are not exposed directly can be managed using the
+configuration system.
 
 ## Installation
 
@@ -82,6 +94,42 @@ ResponsiveTextField(
 
 As the user types in the field, it will update the state that the binding was
 derived from.
+
+### Multiline Text Editing
+
+For multiline text input, use `ResponsiveTextEditor` which wraps `UITextView`:
+
+```swift
+struct ExampleView: View {
+  @State var notes: String = ""
+
+  var body: some View {
+    VStack {
+      ResponsiveTextEditor(
+          placeholder: "Enter your notes...",
+          text: $notes
+      )
+      .frame(minHeight: 100)
+    }
+  }
+}
+```
+
+`ResponsiveTextEditor` supports the same first responder control, environment
+styling modifiers, and standard edit action customisation as `ResponsiveTextField`.
+
+You can configure the underlying `UITextView` using `ResponsiveTextEditor.Configuration`:
+
+```swift
+ResponsiveTextEditor(
+    placeholder: "Notes",
+    text: $notes,
+    configuration: .noCorrection
+)
+```
+
+Built-in configurations include `.empty`, `.noCorrection`, and `.scrollDisabled`.
+You can also combine them using `.combine()` just like `ResponsiveTextField`.
 
 You can enable secure text entry by passing in the `isSecure` property:
 
