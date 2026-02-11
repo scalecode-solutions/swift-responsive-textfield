@@ -592,62 +592,56 @@ public extension View {
 
 // MARK: - Previews
 
-struct ResponsiveTextField_Previews: PreviewProvider {
-    struct TextFieldPreview: View {
-        let configuration: ResponsiveTextField.Configuration
+private struct TextFieldPreview: View {
+    let configuration: ResponsiveTextField.Configuration
 
-        @State
-        var text: String = ""
+    @State
+    var text: String = ""
 
-        @State
-        var firstResponderDemand: FirstResponderDemand? = .shouldBecomeFirstResponder
+    @State
+    var firstResponderDemand: FirstResponderDemand? = .shouldBecomeFirstResponder
 
-        var body: some View {
-            ResponsiveTextField(
-                placeholder: "Placeholder",
-                text: $text,
-                firstResponderDemand: $firstResponderDemand,
-                configuration: configuration,
-                shouldChange: { $1.count <= 10 }
-            )
-            .fixedSize(horizontal: false, vertical: true)
-            .padding()
-        }
+    var body: some View {
+        ResponsiveTextField(
+            placeholder: "Placeholder",
+            text: $text,
+            firstResponderDemand: $firstResponderDemand,
+            configuration: configuration,
+            shouldChange: { $1.count <= 10 }
+        )
+        .fixedSize(horizontal: false, vertical: true)
+        .padding()
     }
+}
 
-    static var previews: some View {
-        Group {
-            TextFieldPreview(configuration: .empty)
-                .previewLayout(.sizeThatFits)
-                .previewDisplayName("Empty Field")
+#Preview("Empty Field") {
+    TextFieldPreview(configuration: .empty)
+}
 
-            TextFieldPreview(configuration: .email, text: "example@example.com")
-                .previewLayout(.sizeThatFits)
-                .previewDisplayName("Email Field")
+#Preview("Email Field") {
+    TextFieldPreview(configuration: .email, text: "example@example.com")
+}
 
-            TextFieldPreview(configuration: .email, text: "example@example.com")
-                .responsiveTextFieldFont(.preferredFont(forTextStyle: .title2))
-                .responsiveTextFieldTextColor(.systemBlue)
-                .previewLayout(.sizeThatFits)
-                .previewDisplayName("Text Styling")
+#Preview("Text Styling") {
+    TextFieldPreview(configuration: .email, text: "example@example.com")
+        .responsiveTextFieldFont(.preferredFont(forTextStyle: .title2))
+        .responsiveTextFieldTextColor(.systemBlue)
+}
 
-            TextFieldPreview(configuration: .email, text: "example@example.com")
-                .responsiveTextFieldFont(.preferredFont(forTextStyle: .body))
-                .responsiveTextFieldTextColor(.systemBlue)
-                .responsiveTextFieldPlaceholderColor(.gray)
-                .previewLayout(.sizeThatFits)
-                .environment(\.sizeCategory, .extraExtraExtraLarge)
-                .previewDisplayName("Dynamic Font Size")
+#Preview("Dynamic Font Size") {
+    TextFieldPreview(configuration: .email, text: "example@example.com")
+        .responsiveTextFieldFont(.preferredFont(forTextStyle: .body))
+        .responsiveTextFieldTextColor(.systemBlue)
+        .responsiveTextFieldPlaceholderColor(.gray)
+        .environment(\.sizeCategory, .extraExtraExtraLarge)
+}
 
-            TextFieldPreview(configuration: .empty, text: "This is some text")
-                .responsiveTextFieldTextAlignment(.center)
-                .previewLayout(.sizeThatFits)
-                .previewDisplayName("Custom Alignment")
+#Preview("Custom Alignment") {
+    TextFieldPreview(configuration: .empty, text: "This is some text")
+        .responsiveTextFieldTextAlignment(.center)
+}
 
-            TextFieldPreview(configuration: .empty, text: "This is some text")
-                .disabled(true)
-                .previewLayout(.sizeThatFits)
-                .previewDisplayName("Disabled Field")
-        }
-    }
+#Preview("Disabled Field") {
+    TextFieldPreview(configuration: .empty, text: "This is some text")
+        .disabled(true)
 }

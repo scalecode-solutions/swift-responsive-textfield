@@ -6,7 +6,7 @@
 This library aims to achieve one goal, which is provide a reasonably flexible
 and useful SwiftUI wrapper around UITextField that provides more control over
 it's first responder status, one of the most glaring omissions from SwiftUI's
-native TextField even in iOS 14.
+native TextField.
 
 ## Features
 

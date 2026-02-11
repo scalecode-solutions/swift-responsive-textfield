@@ -1,11 +1,11 @@
-// swift-tools-version:5.9
+// swift-tools-version:6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
     name: "ResponsiveTextField",
-    platforms: [.iOS(.v13)],
+    platforms: [.iOS(.v18)],
     products: [
         .library(
             name: "ResponsiveTextField",
@@ -27,10 +27,6 @@ let package = Package(
             dependencies: [
                 .product(name: "CombineSchedulers", package: "combine-schedulers")
             ],
-            swiftSettings: [
-                .enableExperimentalFeature("StrictConcurrency"),
-                .enableUpcomingFeature("InferSendableFromCaptures")
-            ]
         ),
         .testTarget(
             name: "ResponsiveTextFieldTests",
@@ -38,11 +34,7 @@ let package = Package(
                 "ResponsiveTextField",
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
             ],
-            exclude: ["__Snapshots__"],
-            swiftSettings: [
-                .enableExperimentalFeature("StrictConcurrency"),
-                .enableUpcomingFeature("InferSendableFromCaptures")
-            ]
+            exclude: ["__Snapshots__"]
         )
     ]
 )

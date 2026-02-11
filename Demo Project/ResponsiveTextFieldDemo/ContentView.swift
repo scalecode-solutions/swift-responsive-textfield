@@ -57,7 +57,7 @@ struct ContentView: View {
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 ResponsiveTextField(
                     placeholder: "Email address",
@@ -135,15 +135,13 @@ struct ContentView: View {
 
                 Text(email).font(.caption)
             }
-            .navigationBarTitle("Responsive Text Field Demo")
+            .navigationTitle("Responsive Text Field Demo")
             .navigationBarTitleDisplayMode(.inline)
             .padding()
         }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+#Preview {
+    ContentView()
 }
